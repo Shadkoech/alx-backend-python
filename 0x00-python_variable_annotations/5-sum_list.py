@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Python module that showcases basic type annotation """
+Python module that showcases complex type annotation """
 
 from typing import List
 
