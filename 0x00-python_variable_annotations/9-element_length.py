@@ -2,10 +2,10 @@
 """
 Module that performes annotation """
 
-from typing import List, Tuple
+import typing
 
-
-def element_length(lst: List[str]) -> List[Tuple[str, int]]:
+def element_length(lst: typing.Iterable[typing.Sequence]) -> \
+        typing.List[typing.Tuple[typing.Sequence, int]]:
     """function that returns a list of tuples containing elements
     and their lengths."""
 
