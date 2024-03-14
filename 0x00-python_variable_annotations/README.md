@@ -12,8 +12,8 @@ These two documents are handy in the exploring the concept
 
 ## Setup
 
-Start by installing mypy by running `pip install mypy`
-Then to validate the annotated code run `mypy your_code.py`
+* Start by installing mypy by running `pip install mypy`
+* Then to validate the annotated code run `mypy your_code.py`
 
 
 ## Tasks
