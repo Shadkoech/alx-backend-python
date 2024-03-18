@@ -3,24 +3,16 @@
 Python module that orchestrates the basics of async concept """
 
 import asyncio
-import time
-wait_n = __import__('1-concurrent_coroutines').wait_n
+wait_random = __import__('0-basic_async_syntax').wait_random
 
 
-async def measure_time(n: int, max_delay: int) -> float:
+def task_wait_random(max_delay: int) -> asyncio.Task:
     """
-    Measures the total execution time for wait_n(n, max_delay),
-    and returns total_time / n.
+    Creates an asyncio.Task for the wait_random coroutine with specified max_delay.
     Args:
-        n (int): Number of times to call wait_random.
         max_delay (int): Maximum delay in seconds (inclusive).
     Returns:
-        float: Average execution time per call to wait_random.
+        Task[float]: asyncio.Task representing the execution of wait_random.
     """
 
-    start_time = time.time()
-    wait_n(n, max_delay)
-    end_time = time.time()
-
-    total_time = end_time - start_time
-    return (total_time/n)
+    return asyncio.create_task(wait_random(max_delay))
