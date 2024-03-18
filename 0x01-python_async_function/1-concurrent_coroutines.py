@@ -22,7 +22,7 @@ async def wait_n(n: int, max_delay: int) -> List[float]:
 
     # Gather the results without sorting and append them to list delay
     for task in asyncio.as_completed(tasks):
-        delay = await task
+        delay = await task  # Retrieve the delay from the completed task
         delays.append(delay)
 
     return delays
