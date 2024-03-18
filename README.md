@@ -4,3 +4,4 @@ Codebase repository  that contains key concepts for developing  server-side logi
 
 - Available directories each holding varied concepts include:
 	* [0x00-python_variable_annotations](0x00-python_variable_annotations)
+	* [0x01-python_async_function](0x01-python_async_function)
