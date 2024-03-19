@@ -44,3 +44,8 @@ Files
 Import async_comprehension from the previous file and write a measure_runtime coroutine that will execute async_comprehension four times in parallel using asyncio.gather.
 - measure_runtime should measure the total runtime and return it.
 
+* Now, let's explain why the total runtime is roughly 10 seconds:
+
+Each call to async_comprehension internally runs async_generator, which involves waiting for 1 second asynchronously per iteration. Since async_comprehension is called four times in parallel using asyncio.gather, the total time taken will be approximately 4 seconds (assuming there's no significant overhead).
+The reason the total runtime is roughly 10 seconds (not exactly 4 seconds) is because there might be some overhead associated with starting and stopping coroutines, context switching, and other asyncio-related operations. Additionally, there could be slight variations in the execution time of each coroutine due to factors like system load, CPU performance, etc.
+Therefore, even though the coroutines are executed in parallel, the total runtime is slightly longer than the sum of individual runtimes due to these factors.
