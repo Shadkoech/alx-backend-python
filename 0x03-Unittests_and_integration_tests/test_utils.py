@@ -5,7 +5,7 @@ interacting with a GitHub organization client"""
 import unittest
 from parameterized import parameterized
 from unittest.mock import patch, Mock
-from utils import access_nested_map, get_json
+from utils import access_nested_map, get_json, memoize
 
 
 class TestAccessNestedMap(unittest.TestCase):
@@ -70,3 +70,36 @@ class TestGetJson(unittest.TestCase):
         with patch('requests.get', return_value=mock_response):
             response = get_json(url)
             self.assertEqual(response, expected_output)
+
+
+class TestMemoize(unittest.TestCase):
+    """Test case class for the memoize decorator"""
+
+    class TestClass:
+        """Test class containing a method and a memoized property."""
+
+        def a_method(self):
+            """A method that returns 42"""
+            return 42
+
+        @memoize
+        def a_property(self):
+            """A memoized property that calls the a_method"""
+            return self.a_method()
+
+    def test_memoize(self):
+        """Method to test the memoization of memoized property"""
+        # Patching the a_method of TestClass
+        with patch.object(self.TestClass, 'a_method') as mock_a_method:
+            # Create an instance of TestClass
+            test_instance = self.TestClass()
+
+            # Call the memoized property twice
+            result1 = test_instance.a_property
+            result2 = test_instance.a_property
+
+            # Assert that the a_method was called only once
+            mock_a_method.assert_called_once()
+
+            # Assert that the results are equal
+            self.assertEqual(result1, result2)
