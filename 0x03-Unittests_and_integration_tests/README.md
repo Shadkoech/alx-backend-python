@@ -14,6 +14,9 @@ Other concepts handled include:
 ### Memoization
 Memoization is actually an optimization technique that is used to speed up the execution time of functions by caching the results of expensive function calls and returning the catched result when the same input occurs again. This technique is very useful and comes in handy when dealing with recursive algorithms where the same inputs are computed repeatedly.
 
+### Parameterize
+The `parameterized` module is used for parameterizing unit tests, allowing the same test method to be run with different inputs.
+
 ## Objectives
 - Explain the difference between unit and integration tests.
 - Apply common testing patterns such as mocking, parametrization, and fixtures.
