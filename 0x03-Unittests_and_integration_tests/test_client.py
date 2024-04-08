@@ -58,3 +58,56 @@ class TestGithubOrgClient(unittest.TestCase):
                 GithubOrgClient("google")._public_repos_url,
                 "https://api.github.com/users/google/repos",
             )
+
+    @patch('client.get_json')
+    @patch.object(GithubOrgClient, '_public_repos_url',
+                  new_callable=PropertyMock)
+    def test_public_repos(self, mock_public_repos_url, mock_get_json):
+        """Test the public_repos method of GithubOrgClient."""
+        # Define a known payload for the mocked get_json function
+        payload = [
+            {"name": "repo1", "license": {"key": "MIT"}},
+            {"name": "repo2", "license": {"key": "Apache"}},
+            {"name": "repo3", "license": {"key": "GPL"}},
+        ]
+        # Patch the return value of the mocked get_json function
+        mock_get_json.return_value = payload
+
+        # Set the return value of the mocked _public_repos_url property
+        mock_public_repos_url.return_value = \
+            "https://api.github.com/orgs/example/repos"
+
+        # Create an instance of GithubOrgClient
+        github_client = GithubOrgClient("example")
+
+        # Call the public_repos method
+        repos = github_client.public_repos()
+
+        # Assert that the return value matches the expected list of repos
+        self.assertEqual(repos, ["repo1", "repo2", "repo3"])
+
+        # Assert that the mocked get_json was called once
+        mock_get_json.assert_called_once()
+
+        # Assert that the mocked _public_repos_url property was called once
+        mock_public_repos_url.assert_called_once()
+
+    @parameterized.expand([
+        ({'license': {'key': "bsd-3-clause"}}, "bsd-3-clause", True),
+        ({'license': {'key': "bsl-1.0"}}, "bsd-3-clause", False),
+    ])
+    def test_has_license(self, repo: dict, key: str, expected: bool) -> None:
+        """Test method to check the has_license method
+        Args:
+            repo (dict): repository data containing the license information
+            key (str): The license key to check
+            expected (bool): expected result of `has_license` method"""
+
+        # Create instance of GithubOrgClient with organization name "google"
+        gh_org_client = GithubOrgClient("google")
+
+        # Call has_license method with provided repo and key
+        client_has_license = gh_org_client.has_license(repo, key)
+
+        # Assert that returned result matches expected result for each testcase
+        self.assertEqual(client_has_license, expected)
